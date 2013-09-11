@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>semagrow-sandbox-openrdf-web</display-name>
+    <servlet>
+        <servlet-name>OpenRDFDataController</servlet-name>
+        <servlet-class>eu.semagrow.sandbox.openrdf.web.OpenRDFDataController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OpenRDFDataController</servlet-name>
+        <url-pattern>/sparql</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OpenRDFDataController</servlet-name>
+        <url-pattern>/import</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OpenRDFDataController</servlet-name>
+        <url-pattern>/triple-io</url-pattern>
+    </servlet-mapping>        
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
