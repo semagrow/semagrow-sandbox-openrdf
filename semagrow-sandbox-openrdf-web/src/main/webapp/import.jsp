@@ -28,7 +28,7 @@
                 %>
                 </optgroup>                
             </select>
-            <input type="submit" value="Run Query"/>
+            <input type="submit" value="Import"/>
         </form>
     </body>
 </html>
