@@ -5,6 +5,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
+<%
+    String sparqlQuery = "SELECT * WHERE { ?s ?p ?o } LIMIT 100";
+    String explanation = "";
+    if(request.getAttribute("query")!=null){
+        sparqlQuery = (String)request.getAttribute("query");
+    }
+    if(request.getAttribute("explanation")!=null){
+        explanation = (String)request.getAttribute("explanation");
+    }    
+%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,7 +24,7 @@
     <body>
         <h1>SPARQL</h1>
         <form action="sparql">
-            <textarea cols="70" rows="10" name="query">SELECT * WHERE { ?s ?p ?o } LIMIT 100</textarea>
+            <textarea cols="70" rows="10" name="query"><%=sparqlQuery%></textarea>
             <br/>
             <select name="acceptMimeType">                
                 
@@ -53,7 +64,11 @@
                 %>
                 </optgroup>                
             </select>
+                explain: <input type="checkbox" name="explain" <%if(!explanation.equals("")){ out.print("checked");}%> />
             <input type="submit" value="Run Query"/>
         </form>
+        <div>
+            <pre><%=explanation%></pre>
+        </div>
     </body>
 </html>

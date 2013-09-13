@@ -4,7 +4,6 @@ import eu.semagrow.sandbox.openrdf.api.OpenRDFDataService;
 import eu.semagrow.sandbox.openrdf.api.impl.OpenRDFDataServiceImpl;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -16,7 +15,6 @@ import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.impl.LiteralImpl;
 import org.openrdf.model.impl.URIImpl;
-import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.TupleQueryResultHandlerException;
@@ -78,7 +76,9 @@ public class OpenRDFDataController extends HttpServlet {
             throws ServletException, IOException {
         String sparqlQuery = request.getParameter("query");
         String acceptMimeType = request.getParameter("acceptMimeType");
-        if(sparqlQuery!= null && acceptMimeType!=null){
+        String explain = request.getParameter("explain");
+        System.out.println("explain " + explain);
+        if(sparqlQuery!= null && acceptMimeType!=null && explain==null){
                     try {
                         response.setContentType(acceptMimeType);
                         service.doQuery(sparqlQuery, acceptMimeType, response.getOutputStream());
@@ -93,6 +93,17 @@ public class OpenRDFDataController extends HttpServlet {
                     } catch (RDFHandlerException ex) {
                         throw new ServletException(ex);
                     }
+        } else
+        if(sparqlQuery!=null && (explain!=null && explain.equals("on"))){
+            request.setAttribute("query", sparqlQuery);
+            try {
+                request.setAttribute("explanation", service.explain(sparqlQuery));
+                request.getRequestDispatcher("/sparql.jsp").forward(request, response);
+            } catch (RepositoryException ex) {
+                throw new ServletException(ex);
+            } catch (MalformedQueryException ex) {
+                throw new ServletException(ex);
+            }
         }
     }
         

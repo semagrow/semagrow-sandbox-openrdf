@@ -167,4 +167,20 @@ public class OpenRDFDataServiceImpl implements OpenRDFDataService {
     }    
     
     /* TRIPLE IO SECTION END */        
+
+    public String explain(String sparqlQuery) throws RepositoryException, MalformedQueryException {
+        RepositoryConnection repCon = null;        
+        Query q = null;
+        try {            
+            repCon = this.repository.getConnection(); 
+            q = repCon.prepareQuery(QueryLanguage.SPARQL, sparqlQuery);
+            return q.toString();
+        } finally {
+            if(repCon!=null){
+                try {
+                    repCon.close();
+                } catch (RepositoryException ex) {}
+            }
+        }        
+    }
 }

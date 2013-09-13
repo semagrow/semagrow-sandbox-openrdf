@@ -19,5 +19,6 @@ public interface OpenRDFDataService {
     public void importRDF(String rdfString, String baseURL, String mimeType) throws RepositoryException, IOException, RDFParseException, RDFHandlerException;
     public void addTriple(URI s, URI p, Value o) throws RepositoryException;    
     public void removeTriple(URI s, URI p, Value o) throws RepositoryException;
+    public String explain(String sparqlQuery) throws RepositoryException, MalformedQueryException;
     public void shutDown();
 }
